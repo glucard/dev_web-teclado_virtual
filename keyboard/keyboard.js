@@ -28,6 +28,9 @@ const Keyboard = {
 
         caixa.innerHTML = this.content.value;
 
+        caixa.addEventListener("click", () => {
+            this.elements.main.classList.remove("keyboard--hidden");
+        });
     },
 
     _createKeys() {
@@ -54,7 +57,7 @@ const Keyboard = {
             "i",
             "o",
             "p",
-            "caps",
+            "Capslock",
             "a",
             "s",
             "d",
@@ -105,6 +108,52 @@ const Keyboard = {
                         caixa.innerHTML = this.content.value;
 
                     });
+                    break;
+                case "done":
+                    keyElement.addEventListener('click', () => {
+                        this.elements.main.classList.add("keyboard--hidden");
+                    })
+                    break;
+                case "enter":
+                    keyElement.addEventListener("click", () => {
+                        console.log(this.content.value);
+                        this.content.value += "\n";
+                        caixa.innerHTML = this.content.value;
+                        
+                    });
+                    break;
+                case "Capslock":
+                    keyElement.addEventListener("click", () => {
+                        keyElement.classList.toggle("caps--on");
+                        letter_keys = document.querySelectorAll('.letter_key');;
+                        letter_keys.forEach(k => {
+                            if (keyElement.classList.contains("caps--on")){
+                                k.textContent = k.textContent.toUpperCase();
+                            } else {
+                                k.textContent = k.textContent.toLowerCase()
+                            }
+                        })
+                    });
+                    break;
+                case "space":
+                    keyElement.addEventListener("click", () => {
+                        console.log(this.content.value);
+                        this.content.value += " ";
+                        caixa.innerHTML = this.content.value;
+                        
+                    });
+                    break;
+                default:
+                    keyElement.addEventListener("click", () => {
+                        console.log(this.content.value);
+                        this.content.value += keyElement.textContent;
+                        caixa.innerHTML = this.content.value;
+                    });
+
+                    if (!(key == "?" || key == "." || key == ",")){
+                        keyElement.classList.add("letter_key");
+                    }
+
             }
 
             fragment.appendChild(keyElement);
